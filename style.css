@@ -13,6 +13,7 @@ body {
     background-color: #333;
     color: #ddd;
     height: 100vh;
+    background-image: linear-gradient(to right, #376360, #09ada5);
 }
 
 .descricao {
@@ -78,4 +79,11 @@ progress {
 
 .player #pause {
     display: none;
+}
+
+.player #play:hover, 
+.player #pause:hover,
+.player #previours:hover, 
+.player #next:hover {
+    opacity: 0.85;
 }

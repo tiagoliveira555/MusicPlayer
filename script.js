@@ -21,13 +21,13 @@ const musicas = [
     img: 'imgs/thiago_aquino.jpeg'}
 ];
 
-let musica = document.querySelector('audio');
+const musica = document.querySelector('audio');
 let indexMusica = 0;
 
-let duracaoMusica = document.querySelector('.fim');
-let imagem = document.querySelector('img');
-let nomeMusica = document.querySelector('.descricao h2');
-let nomeArtista = document.querySelector('.descricao i');
+const duracaoMusica = document.querySelector('.fim');
+const imagem = document.querySelector('img');
+const nomeMusica = document.querySelector('.descricao h2');
+const nomeArtista = document.querySelector('.descricao i');
 
 renderizarMusica(indexMusica);
 
@@ -45,7 +45,7 @@ document.getElementById('previours').addEventListener('click', () => {
 
 document.getElementById('next').addEventListener('click', () => {
     indexMusica++;
-    if (indexMusica > 4) {
+    if (indexMusica === musicas.length) {
         indexMusica = 0;
     }
     renderizarMusica(indexMusica);
@@ -64,13 +64,6 @@ function pausarMusica() {
     musica.pause();
     document.getElementById('play').style.display = 'block';
     document.getElementById('pause').style.display = 'none';
-}
-
-function atualizarBarra() {
-    let barra = document.querySelector('progress');
-    barra.style.width = Math.floor((musica.currentTime / musica.duration) * 100) + '%';
-    let tempoDecorrido = document.querySelector('.inicio');
-    tempoDecorrido.textContent = segundosParaMinutos(Math.floor(musica.currentTime));
 }
 
 function segundosParaMinutos(segundos) {
@@ -92,4 +85,21 @@ function renderizarMusica(index) {
         duracaoMusica.textContent = segundosParaMinutos(Math.floor(musica.duration));
         playMusica();
     });
+}
+
+function atualizarBarra() {
+    const barra = document.querySelector('progress');
+    barra.style.width = Math.floor((musica.currentTime / musica.duration) * 100) + '%';
+    const tempoDecorrido = document.querySelector('.inicio');
+    tempoDecorrido.textContent = segundosParaMinutos(Math.floor(musica.currentTime));
+
+    const tempoDescrescente = Math.floor(musica.duration - musica.currentTime);
+    if (tempoDescrescente === 0) {
+        indexMusica++;
+        if (indexMusica === musicas.length) {
+            indexMusica = 0;
+        }        
+        renderizarMusica(indexMusica);
+    }
+    duracaoMusica.textContent = segundosParaMinutos(Math.floor(tempoDescrescente));
 }
